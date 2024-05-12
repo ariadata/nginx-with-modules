@@ -22,13 +22,29 @@ apt -yq update && apt -y install nginx=1.26.0-1~bookworm
 
 systemctl enable --now nginx
 
-apt -y install https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/
-apt -y install https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/
-apt -y install https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/
-apt -y install https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/
-apt -y install https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/
-apt -y install https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/
-apt -y install https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/
+deb_files=(
+  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-ndk_1.26.0+0.3.3-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-brotli_1.26.0+1.0.0-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-echo_1.26.0+1.0-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-fips-check_1.26.0+0.1-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-geoip2_1.26.0+3.4-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-headers-more_1.26.0+0.35-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-lua_1.26.0+0.10.26-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-njs_1.26.0+0.8.4-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-passenger_1.26.0+6.0.19-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-perl_1.26.0-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-subs-filter_1.26.0+0.6.4-1~bookworm_amd64.deb"
+)
+mkdir -p deb-files
+for url in "${deb_files[@]}"; do
+  filename=$(basename "$url")
+  curl -fsSL -o "deb-files/$filename" "$url"
+done
+
+apt install --no-install-suggests --no-install-recommends -yq ./deb-files/*.deb
+
+rm -rf ./deb-files/
+
 
 ```
 

@@ -1,0 +1,5 @@
+Stable (1.26) :
+	docker build -f Dockerfile.stable --build-arg ENABLED_MODULES="echo ndk lua brotli geoip2 headers-more njs passenger perl subs-filter fips-check" -t my-nginx-remove -o out .
+	
+--------------------------------------------
+apt install --no-install-suggests --no-install-recommends -y ./*.deb
