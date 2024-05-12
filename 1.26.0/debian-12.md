@@ -46,6 +46,13 @@ apt install --no-install-suggests --no-install-recommends -yq ./deb-files/*.deb
 rm -rf ./deb-files/
 
 
+### Download GeoIP2 Files:
+mkdir -p /etc/geoip2/
+wget -O /etc/geoip2/GeoLite2-ASN.mmdb $(curl -s https://api.github.com/repos/PrxyHunter/GeoLite2/releases/latest |grep browser_ |grep GeoLite2-ASN.mmdb |cut -d\" -f4)
+wget -O /etc/geoip2/GeoLite2-City.mmdb $(curl -s https://api.github.com/repos/PrxyHunter/GeoLite2/releases/latest |grep browser_ |grep GeoLite2-City.mmdb |cut -d\" -f4)
+wget -O /etc/geoip2/GeoLite2-Country.mmdb $(curl -s https://api.github.com/repos/PrxyHunter/GeoLite2/releases/latest |grep browser_ |grep GeoLite2-Country.mmdb |cut -d\" -f4)
+
+
 ```
 
 ### Sxample of nginx.conf in `/etc/nginx/nginx.conf`
