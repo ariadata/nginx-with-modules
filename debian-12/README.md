@@ -18,23 +18,23 @@ curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | tee /usr/share/k
 
 echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/debian `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list
 
-apt -yq update && apt -y install nginx=1.26.0-1~bookworm && apt-mark hold nginx
+apt -yq update && apt -y install nginx=1.26.1-1~bookworm && apt-mark hold nginx
 
 systemctl enable --now nginx
 
 
 deb_files=(
-  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-ndk_1.26.0+0.3.3-1~bookworm_amd64.deb"
-  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-brotli_1.26.0+1.0.0-1~bookworm_amd64.deb"
-  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-echo_1.26.0+1.0-1~bookworm_amd64.deb"
-  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-fips-check_1.26.0+0.1-1~bookworm_amd64.deb"
-  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-geoip2_1.26.0+3.4-1~bookworm_amd64.deb"
-  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-headers-more_1.26.0+0.35-1~bookworm_amd64.deb"
-  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-lua_1.26.0+0.10.26-1~bookworm_amd64.deb"
-  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-njs_1.26.0+0.8.4-1~bookworm_amd64.deb"
-  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-passenger_1.26.0+6.0.19-1~bookworm_amd64.deb"
-  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-perl_1.26.0-1~bookworm_amd64.deb"
-  "https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/nginx-module-subs-filter_1.26.0+0.6.4-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/nginx-module-ndk_1.26.1+0.3.3-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/nginx-module-brotli_1.26.1+1.0.0-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/nginx-module-echo_1.26.1+1.0-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/nginx-module-fips-check_1.26.1+0.1-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/nginx-module-geoip2_1.26.1+3.4-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/nginx-module-headers-more_1.26.1+0.35-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/nginx-module-lua_1.26.1+0.10.26-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/nginx-module-njs_1.26.1+0.8.4-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/nginx-module-passenger_1.26.1+6.0.19-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/nginx-module-perl_1.26.1-1~bookworm_amd64.deb"
+  "https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/nginx-module-subs-filter_1.26.1+0.6.4-1~bookworm_amd64.deb"
 )
 mkdir -p deb-files
 for url in "${deb_files[@]}"; do
@@ -54,7 +54,7 @@ wget -O /etc/geoip2/GeoLite2-City.mmdb $(curl -s https://api.github.com/repos/Pr
 wget -O /etc/geoip2/GeoLite2-Country.mmdb $(curl -s https://api.github.com/repos/PrxyHunter/GeoLite2/releases/latest |grep browser_ |grep GeoLite2-Country.mmdb |cut -d\" -f4)
 
 # logrotate.d
-curl -o /etc/logrotate.d/nginx -L https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/etc/logrotate.d/nginx && chmod 0644 /etc/logrotate.d/nginx
+curl -o /etc/logrotate.d/nginx -L https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/etc/logrotate.d/nginx && chmod 0644 /etc/logrotate.d/nginx
 
 # Copy geoip2/ to /etc/geoip2
 ln -s /etc/geoip2 /root/geoip2 && ln -s /etc/geoip2 /etc/nginx/geoip2
@@ -74,7 +74,7 @@ ln -s /opt/certbot/bin/certbot /usr/bin/certbot
 certbot register --agree-tos --no-eff-email -m email@gmail.com
 
 
-curl -o /etc/letsencrypt/renewal-hooks/post/nginx-reload.sh -L https://github.com/ariadata/nginx-with-modules/raw/main/1.26.0/debian-12/etc/letsencrypt/renewal-hooks/post/nginx-reload.sh && chmod +x /etc/letsencrypt/renewal-hooks/post/nginx-reload.sh
+curl -o /etc/letsencrypt/renewal-hooks/post/nginx-reload.sh -L https://github.com/ariadata/nginx-with-modules/raw/main/debian-12/1.26.1/etc/letsencrypt/renewal-hooks/post/nginx-reload.sh && chmod +x /etc/letsencrypt/renewal-hooks/post/nginx-reload.sh
 
 
 # Cloudflare API_Token
